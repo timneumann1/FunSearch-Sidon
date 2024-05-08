@@ -1,4 +1,4 @@
-# FunSearch
+# Senior Thesis: Using Google DeepMind's FunSearch algorithm for the search for large complete Sidon sets in AG(n,3)
 
 
 Usage:
