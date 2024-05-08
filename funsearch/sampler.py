@@ -18,6 +18,7 @@ from collections.abc import Collection, Sequence
 
 import llm
 import numpy as np
+import logging
 
 from funsearch import evaluator
 from funsearch import programs_database
@@ -34,7 +35,11 @@ class LLM:
 
   def _draw_sample(self, prompt: str) -> str:
     """Returns a predicted continuation of `prompt`."""
-    response = self.model.prompt(prompt)
+    logging.info(f"Creating prompt #{self.prompt_count}")
+    # setting hyperparameters for code-bison model, most importantly temperature
+    response = self.model.predict(prompt, temperature = 0.9, max_output_tokens = 1024, candidate_count = 1) # more parameters can be added here, e.g., top_p = 0.95
+    response = response.text # only extract the actual response from Google Codey
+  
     self._log(prompt, response, self.prompt_count)
     self.prompt_count += 1
     return response
