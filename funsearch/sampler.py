@@ -37,7 +37,7 @@ class LLM:
     """Returns a predicted continuation of `prompt`."""
     logging.info(f"Creating prompt #{self.prompt_count}")
     # setting hyperparameters for code-bison model, most importantly temperature
-    response = self.model.predict(prompt, temperature = 0.9, max_output_tokens = 1024, candidate_count = 1) # more parameters can be added here, e.g., top_p = 0.95
+    response = self.model.predict(prompt, temperature = 0.7, max_output_tokens = 1024, candidate_count = 1) # more parameters can be added here, e.g., top_p = 0.95
     response = response.text # only extract the actual response from Google Codey
   
     self._log(prompt, response, self.prompt_count)
