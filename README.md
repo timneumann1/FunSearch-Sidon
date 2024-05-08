@@ -58,23 +58,20 @@ Here, place the name of your .json file in the --authen argument. Note that we o
 
 Now the FunSearch experiment will repeatedly query the LLM and update the programs database.
 
+
+
+
+
 Here are some remarks on this architecture as added by @jonppe:
-
-'Note that in the last command we use the ExternalProcessSandbox that is not fully safe
-but makes it a bit less likely that invalid code from LLM would break the search.'
-
-**Alternatively, you can run the main Python process on a host computer outside of any container and let
-the process build and run separate sandbox containers (still requires Podman/Docker).
-This variant could be also used, e.g., in Colab quite safely since the environment is some kind of container itself.**
-
 ```
-pip install .
-
-funsearch run examples/cap_set_spec.py 11
+Note that in the last command we use the ExternalProcessSandbox that is not fully safe
+but makes it a bit less likely that invalid code from LLM would break the search. [...]
+Currently, the search is only using single thread with no asyncio and is somewhat slow
+for challenging tasks.
 ```
 
-**Currently, the search is only using single thread with no asyncio and is somewhat slow
-for challenging tasks.**
+For alternative ways of running the algorithm safely, refer to @jonppe's GitHub page.
+
 
 
 
