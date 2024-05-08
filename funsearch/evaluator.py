@@ -19,10 +19,12 @@ import re
 from collections.abc import Sequence
 import copy
 from typing import Any, Tuple
+import logging
 
 from funsearch import code_manipulation
 from funsearch import programs_database
 from funsearch import sandbox
+
 
 """
   Regex to find all methods named 'priority_vX'.
@@ -162,6 +164,7 @@ class Evaluator:
     """Compiles the sample into a program and executes it on test inputs."""
     new_function, program = _sample_to_program(
         sample, version_generated, self._template, self._function_to_evolve)
+    logging.info(f"Program: {new_function}")
 
     scores_per_test = {}
     for current_input in self._inputs:
@@ -172,5 +175,8 @@ class Evaluator:
         if not isinstance(test_output, (int, float)):
           raise ValueError('@function.run did not return an int/float score.')
         scores_per_test[current_input] = test_output
+    
+    logging.info(f"Runs OK: {runs_ok}, Scores:{scores_per_test}")
+
     if scores_per_test:
       self._database.register_program(new_function, island_id, scores_per_test)
