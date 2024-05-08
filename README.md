@@ -6,7 +6,6 @@ The code in this repository stems largely from the implementation that @jonppe b
 includes an implementation of querying Google's Large Language Model code-bison.
 
 In the following, we provide an overview over how to use the code in this repository to search for large Sidon sets. (Note that especially in terms of the container environment, there are multiple ways to achieve this. The below items are based on a working implementation on a macOS device, and we do not offer any warranties for the accuracy or completeness of the provided information, or the safety of the algorithm implemented herein.)
-)
 
 1. In order to use the Google code-bison LLM, you need a Google Cloud console profile to access the Vertex AI API. You can use an ordinary @gmail.com address to open a new project in the Google Cloud Console. At the time of writing, private users receive credit to spend on experimenting with the Cloud services. Once the project is created, you need to add a service account and create a key for it. The key can be downloaded in .json format (this file should be kept private).
    
