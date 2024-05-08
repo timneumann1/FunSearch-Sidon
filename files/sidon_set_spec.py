@@ -8,7 +8,7 @@ import numpy as np
 
 import funsearch
 
-# @funsearch.run
+@funsearch.run
 def evaluate(n: int) -> int:
   """Returns the size of an `n`-dimensional set with pairwise distinct sums."""
   capset = solve(n)
@@ -47,7 +47,7 @@ def solve(n: int) -> np.ndarray:
 
   return sidon_set
 
-# @funsearch.evolve
+@funsearch.evolve
 def priority(el: tuple[int, ...], n: int) -> float:
   """Returns the priority with which we want to add `element` to the set with pairwise distinct sums."""
   return 0.0
