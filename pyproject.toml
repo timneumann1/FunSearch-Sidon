@@ -28,6 +28,10 @@ dependencies = [
   "python-dotenv==1.0.0",
   "scipy==1.11.4",
   "numpy==1.26.2",
+  "tqdm==4.65.0",
+  "transformers==4.28.1",
+  "accelerate==0.18.0",
+  "google-cloud-aiplatform"
 ]
 
 [project.scripts]
