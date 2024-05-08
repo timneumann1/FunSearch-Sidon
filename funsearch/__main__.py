@@ -6,15 +6,17 @@ import pickle
 import time
 
 import click
-import llm
-from dotenv import load_dotenv
 
+from vertexai.language_models import CodeGenerationModel
+from google.cloud import aiplatform
+from google.oauth2 import service_account
+
+from dotenv import load_dotenv
 
 from funsearch import config, core, sandbox, sampler, programs_database, code_manipulation, evaluator
 
 LOGLEVEL = os.environ.get('LOGLEVEL', 'INFO').upper()
 logging.basicConfig(level=LOGLEVEL)
-
 
 def get_all_subclasses(cls):
   all_subclasses = []
@@ -25,10 +27,8 @@ def get_all_subclasses(cls):
 
   return all_subclasses
 
-
 SANDBOX_TYPES = get_all_subclasses(sandbox.DummySandbox) + [sandbox.DummySandbox]
 SANDBOX_NAMES = [c.__name__ for c in SANDBOX_TYPES]
-
 
 def parse_input(filename_or_data: str):
   if len(filename_or_data) == 0:
@@ -54,16 +54,16 @@ def parse_input(filename_or_data: str):
 def main(ctx):
   pass
 
-
 @main.command()
 @click.argument("spec_file", type=click.File("r"))
 @click.argument('inputs')
-@click.option('--model_name', default="gpt-3.5-turbo-instruct", help='LLM model')
 @click.option('--output_path', default="./data/", type=click.Path(file_okay=False), help='path for logs and data')
 @click.option('--load_backup', default=None, type=click.File("rb"), help='Use existing program database')
 @click.option('--iterations', default=-1, type=click.INT, help='Max iterations per sampler')
 @click.option('--samplers', default=15, type=click.INT, help='Samplers')
 @click.option('--sandbox_type', default="ContainerSandbox", type=click.Choice(SANDBOX_NAMES), help='Sandbox type')
+@click.option('--authen', default=None)
+
 def run(spec_file, inputs, model_name, output_path, load_backup, iterations, samplers, sandbox_type):
   """ Execute function-search algorithm:
 
@@ -94,8 +94,11 @@ def run(spec_file, inputs, model_name, output_path, load_backup, iterations, sam
     log_path.mkdir(parents=True)
     logging.info(f"Writing logs to {log_path}")
 
-  model = llm.get_model(model_name)
-  model.key = model.get_key()
+  credential = service_account.Credentials.from_service_account_file(authen)
+  aiplatform.init(project="phonic-silo-417508", location="us-east4", credentials=credential)
+
+  model = CodeGenerationModel.from_pretrained("code-bison@002")
+
   lm = sampler.LLM(2, model, log_path)
 
   specification = spec_file.read()
