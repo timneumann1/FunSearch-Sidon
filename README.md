@@ -22,11 +22,11 @@ and create a "data" folder using
 mkdir data
 ```
 Also, add the .json file downloaded from the Google Cloud Account to the (existing) "files" folder.
-4. Your .json file has randomized name, e.g., "phonic-silo-417508-fc2829b1d7ce.json". 
-
-has 
-
-phonic-silo-417508 and phonic-silo-417508-fc2829b1d7ce.json
+4. Your .json file has randomized name, e.g., "phonic-silo-417508-fc2829b1d7ce.json". In the file "funsearch/__main__.py" (line 98), insert the first three alphanumeric parts of this name into the aiplatform.init() function and add your location (available locations can be retrieved from the Google LLM documentation), e.g., 
+```
+aiplatform.init(project="phonic-silo-417508", location="us-east4", credentials=credential)
+```
+Make sure that your input in line 98 matches the name of your .json file in the "files" folder.
 
 
 
