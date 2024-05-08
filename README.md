@@ -28,62 +28,29 @@ aiplatform.init(project="phonic-silo-417508", location="us-east4", credentials=c
 ```
 Make sure that your input in line 98 matches the name of your .json file in the "files" folder.
 5. If you want to make changes to the FunSearch algorithm, open the "funsearch/config.py" file and set parameters like the reset period (in seconds) or the backup period (in number of programs in database).
-For changes in hyperparameters, you can set a temperature and other parameters in the file "funsearch/sampler.py" (line
-sampler.py: set temperature ! very important 
-
-
-
-
-Verify that Docker Desktop is running
-
-
-
-
-
-
-
-
-
-Usage:
-
-
-You can run FunSearch in container using Podman or Docker
-
+For changes in hyperparameters, you can set a temperature and other parameters in the file "funsearch/sampler.py" (line 40). The current configuration here is 
 ```
-podman build . -t funsearch
-
-
-# Create a folder to share with the container
-mkdir data
-podman run -it -v ./data:/workspace/data funsearch
-
-# Set the environment variable OPENAI_API_KEY=sk-xxxx or create .env file.
-# "gpt-3.5-turbo-instruct" model is used by default.
-# Refer to 'llm' package docs to use other models.
-
-funsearch run examples/cap_set_spec.py 11 --sandbox_type ExternalProcessSandbox
+response = self.model.predict(prompt, temperature = 0.7, max_output_tokens = 1024, candidate_count = 1) 
 ```
-In here we are searching for the algorithm to find maximum cap sets for dimension 11.
-You should see output something like
+and more parameters, e.g., the "top_p" parameter for Large Language Models, might be added here.
+6. Now it is time to build the container. In order to do this, verify that Docker Desktop is running and enter the Terminal command
 ```
-root@11c22cd7aeac:/workspace# funsearch run examples/cap_set_spec.py 11 --sandbox_type ExternalProcessSandbox
-INFO:root:Writing logs to data/1704956206
-INFO:absl:Best score of island 0 increased to 2048
-INFO:absl:Best score of island 1 increased to 2048
-INFO:absl:Best score of island 2 increased to 2048
-INFO:absl:Best score of island 3 increased to 2048
-INFO:absl:Best score of island 4 increased to 2048
-INFO:absl:Best score of island 5 increased to 2048
-INFO:absl:Best score of island 6 increased to 2048
-INFO:absl:Best score of island 7 increased to 2048
-INFO:absl:Best score of island 8 increased to 2048
-INFO:absl:Best score of island 9 increased to 2048
-INFO:absl:Best score of island 5 increased to 2053
-INFO:absl:Best score of island 1 increased to 2049
-INFO:absl:Best score of island 8 increased to 2684
-^C^CINFO:root:Keyboard interrupt. Stopping.
-INFO:absl:Saving backup to data/backups/program_db_priority_1704956206_0.pickle.
+docker build -t funsearch .
 ```
+The build takes some time for the first time. Once successfully completed, enter the container by entering
+```
+docker run -it -v ./data:/workspace/data funsearch
+```
+Now you are in the container environment "funsearch".
+7. To run the FunSearch algorithm, enter the Terminal command 
+```
+funsearch run files/sidon_set_spec.py 7 --sandbox_type ExternalProcessSandbox --authen files/<YOUR .JSON FILE NAME>.json
+```
+Here, place the name of your .json file in the --authen argument. Note that we only evaluate Sidon sets in one dimension (n = 7) with this command. In the "files" folder, there is also the capset specification file, which can replace the Sidon set specification file, if desired.
+
+Now the FunSearch experiment will repeatedly query the LLM and update the programs database.
+
+Here are some remarks on this architecture as added by @jonppe:
 
 Note that in the last command we use the ExternalProcessSandbox that is not fully safe
 but makes it a bit less likely that invalid code from LLM would break the search.
@@ -98,8 +65,6 @@ pip install .
 
 funsearch run examples/cap_set_spec.py 11
 ```
-
-For more complex input data, you can provide the input also as a .json or .pickle file.
 
 Currently, the search is only using single thread with no asyncio and is somewhat slow
 for challenging tasks.  
