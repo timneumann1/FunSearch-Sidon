@@ -1,5 +1,21 @@
 # Senior Thesis: Using Google DeepMind's FunSearch algorithm for the search for large complete Sidon sets in AG(n,3)
 
+This repository serves as a proof of concept that the FunSearch algorithm introduced by DeepMind can be used to search for Sidon sets / 4-general sets over AG(n,3). 
+[The original paper considered capsets (3-general sets) over AG(n,3).] In order to achieve this, we make a change to the specification file, blocking more points than in the capset case.
+The code in this repository stems largely from the implementation that @jonppe built on top of the publicly availalble code by DeepMind. It has been altered in some minor aspects, but most notably it 
+includes an implementation of querying Google's Large Language Model code-bison.
+
+In the following, we provide an overview of how to use the code in this repository to search for large Sidon sets.
+
+
+
+
+
+
+
+
+
+
 
 Usage:
 
