@@ -1,4 +1,6 @@
-"""Finds large Sidon sets of points with pairwise distinct sums."""
+"""Finds a maximal set of points with pairwise distinct sums.
+On every iteration, improve the priority_v2 function over the priority_v0 and priority_v1 methods from previous iterations.
+"""
 
 import itertools
 
