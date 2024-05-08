@@ -64,7 +64,7 @@ def main(ctx):
 @click.option('--sandbox_type', default="ContainerSandbox", type=click.Choice(SANDBOX_NAMES), help='Sandbox type')
 @click.option('--authen', default=None)
 
-def run(spec_file, inputs, model_name, output_path, load_backup, iterations, samplers, sandbox_type):
+def run(spec_file, inputs, model_name, output_path, load_backup, iterations, samplers, sandbox_type, authen):
   """ Execute function-search algorithm:
 
 \b
