@@ -8,7 +8,7 @@ COPY pyproject.toml README.md pdm.lock ./
 # install dependencies first. PDM also creates a /workspace/.venv here.
 ENV PATH="/workspace/.venv/bin:$PATH"
 RUN pdm install  --no-self
-COPY examples ./files
+COPY files ./files
 COPY funsearch ./funsearch
 
 RUN pip install --no-deps . && rm -r ./funsearch ./build
