@@ -174,6 +174,9 @@ class ProgramsDatabase:
     else:
       self._register_program_in_island(program, island_id, scores_per_test)
 
+    self._program_counter += 1
+    logging.info(f"Programs in Database: {self._program_counter}")
+
     # Check whether it is time to reset an island.
     if (time.time() - self._last_reset_time > self._config.reset_period):
       self._last_reset_time = time.time()
@@ -181,9 +184,7 @@ class ProgramsDatabase:
 
     # Backup every N iterations
     if self._program_counter > 0:
-      self._program_counter += 1
-      if self._program_counter > self._config.backup_period:
-        self._program_counter = 0
+      if (self._program_counter % self._config.backup_period) == 0:
         self.backup()
 
   def reset_islands(self) -> None:
@@ -207,6 +208,7 @@ class ProgramsDatabase:
       founder = self._best_program_per_island[founder_island_id]
       founder_scores = self._best_scores_per_test_per_island[founder_island_id]
       self._register_program_in_island(founder, island_id, founder_scores)
+    self.backup()
 
 
 class Island:
