@@ -34,10 +34,10 @@ class ProgramsDatabaseConfig:
   """
   functions_per_prompt: int = 2
   num_islands: int = 10
-  reset_period: int = 4 * 60 * 60
+  reset_period: int = 4 * 60 * 60 # set the reset period in seconds
   cluster_sampling_temperature_init: float = 0.1
   cluster_sampling_temperature_period: int = 30_000
-  backup_period: int = 30
+  backup_period: int = 10000 # set the backup period in number of programs in database
   backup_folder: str = './data/backups'
 
 
