@@ -27,8 +27,14 @@ Also, add the .json file downloaded from the Google Cloud Account to the (existi
 aiplatform.init(project="phonic-silo-417508", location="us-east4", credentials=credential)
 ```
 Make sure that your input in line 98 matches the name of your .json file in the "files" folder.
+5. If you want to make changes to the FunSearch algorithm, open the "funsearch/config.py" file and set parameters like the reset period (in seconds) or the backup period (in number of programs in database).
+For changes in hyperparameters, you can set a temperature and other parameters in the file "funsearch/sampler.py" (line
+sampler.py: set temperature ! very important 
 
 
+
+
+Verify that Docker Desktop is running
 
 
 
