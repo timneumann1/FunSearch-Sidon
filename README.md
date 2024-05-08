@@ -1,10 +1,11 @@
 # Senior Thesis: Using Google DeepMind's FunSearch algorithm for the search for large complete Sidon sets in AG(n,3)
 
 This repository serves as a proof of concept that the FunSearch algorithm introduced by DeepMind can be used to search for Sidon sets / 4-general sets over AG(n,3), whereas the original paper considered capsets (3-general sets) over AG(n,3). In order to achieve this, we make a change to the specification file, blocking more points than in the capset case.
+
 The code in this repository stems largely from the implementation that @jonppe built on top of the publicly available code published by DeepMind. It has been altered in some minor aspects, but most notably it 
 includes an implementation of querying Google's Large Language Model code-bison.
 
-In the following, we provide an overview of how to use the code in this repository to search for large Sidon sets. (Note that especially in terms of the container environment, there are multiple ways to achieve this. The below items are based on a working implementation on a macOS device.)
+In the following, we provide an overview over how to use the code in this repository to search for large Sidon sets. (Note that especially in terms of the container environment, there are multiple ways to achieve this. The below items are based on a working implementation on a macOS device.)
 
 1. In order to use the Google code-bison LLM, you need a Google Cloud console profile to access the Vertex AI API. You can use an ordinary @gmail.com address to open a new project in the Google Cloud Console. At the time of writing, private users receive credit to spend on experimenting with the Cloud services. Once the project is created, you need to add a service account and create a key for it. The key can be downloaded in .json format (this file should be kept private).
    
