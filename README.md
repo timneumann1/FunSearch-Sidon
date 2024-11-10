@@ -31,6 +31,8 @@ aiplatform.init(project="phonic-silo-417508", location="us-east4", credentials=c
 ```
 Make sure that your input in line 98 matches the name of your .json file in the "files" folder.
 
+Note: It might be necessary to change the model type (specified in the line following the authentification described above), since supported models in the Google Vertex AI API may be subject to change.
+
 5. If you want to make changes to the FunSearch algorithm, open the "funsearch/config.py" file and set parameters like the reset period (in seconds) or the backup period (in number of programs in database).
 For changes in hyperparameters, you can set a temperature and other parameters in the file "funsearch/sampler.py" (line 40). The current configuration here is 
 ```
